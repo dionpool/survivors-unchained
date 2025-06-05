@@ -1,0 +1,117 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxcx63c2uv7gr"]
+
+[ext_resource type="Script" uid="uid://b0w7ekmk6fpsa" path="res://addons/enemy-manager/enemy_manager_dock.gd" id="1_thrk2"]
+
+[node name="EnemyManagerDock" type="Window"]
+title = "Enemy Manager"
+position = Vector2i(0, 36)
+size = Vector2i(340, 530)
+max_size = Vector2i(340, 570)
+script = ExtResource("1_thrk2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -155.5
+offset_top = -252.0
+offset_right = 155.5
+offset_bottom = 252.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="SelectEnemyData" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "forest_yeti_data.tres"
+popup/item_0/id = 0
+popup/item_1/text = "new_skeleton_data.tres"
+popup/item_1/id = 1
+popup/item_2/text = "skeleton_data.tres"
+popup/item_2/id = 2
+
+[node name="LoadButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Load"
+
+[node name="NewEnemyButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "New"
+
+[node name="NameLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Name:"
+
+[node name="NameField" type="LineEdit" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="DescriptionLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Description:"
+
+[node name="DescriptionField" type="LineEdit" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HealthLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Health:"
+
+[node name="HealthField" type="SpinBox" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="SpeedLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Speed:"
+
+[node name="SpeedField" type="SpinBox" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="DamageLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Damage:"
+
+[node name="DamageField" type="SpinBox" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ExperienceLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Experience:"
+
+[node name="ExperienceField" type="SpinBox" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ScenePreview" type="TextureRect" parent="VBoxContainer"]
+layout_mode = 2
+expand_mode = 4
+
+[node name="SelectEnemyScene" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Select Enemy Scene"
+
+[node name="SelectedScene" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="EnemySceneDialog" type="FileDialog" parent="VBoxContainer"]
+title = "Open a File"
+position = Vector2i(0, 36)
+ok_button_text = "Open"
+file_mode = 0
+filters = PackedStringArray("*.tscn")
+
+[node name="SaveButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Save"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/NewEnemyButton" to="." method="_on_new_enemy_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/SelectEnemyScene" to="." method="_on_select_enemy_scene_pressed"]
+[connection signal="file_selected" from="VBoxContainer/EnemySceneDialog" to="." method="_on_enemy_scene_dialog_file_selected"]
+[connection signal="pressed" from="VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]

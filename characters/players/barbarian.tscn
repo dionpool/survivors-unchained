@@ -1,0 +1,71 @@
+[gd_scene load_steps=10 format=3 uid="uid://pkr8iqd63c7a"]
+
+[ext_resource type="Texture2D" uid="uid://sximgvdln24y" path="res://art/characters/players/barbarian-1.png" id="1_5pm83"]
+[ext_resource type="Script" uid="uid://d1150t1aexbpc" path="res://characters/players/barbarian.gd" id="1_canqk"]
+[ext_resource type="Texture2D" uid="uid://dtio7k7olpg3h" path="res://art/characters/players/barbarian-2.png" id="2_canqk"]
+[ext_resource type="Texture2D" uid="uid://oewp850qtpty" path="res://art/characters/players/barbarian-3.png" id="3_3tv0p"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ehwok"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_5pm83")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_canqk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_3tv0p")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+}]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_canqk"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3tv0p"]
+bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nkrq0"]
+height = 34.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_canqk"]
+height = 34.0
+
+[node name="Barbarian" type="CharacterBody2D"]
+script = ExtResource("1_canqk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ehwok")
+animation = &"run"
+frame_progress = 0.188505
+
+[node name="HealthBar" type="ProgressBar" parent="AnimatedSprite2D"]
+offset_left = -25.0
+offset_top = -31.0
+offset_right = 25.0
+offset_bottom = -26.0
+theme_override_styles/background = SubResource("StyleBoxFlat_canqk")
+theme_override_styles/fill = SubResource("StyleBoxFlat_3tv0p")
+value = 100.0
+show_percentage = false
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_nkrq0")
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 128
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+light_mask = 2
+visibility_layer = 2
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_canqk")
+
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]

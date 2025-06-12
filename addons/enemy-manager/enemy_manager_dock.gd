@@ -38,7 +38,7 @@ func _refresh_enemy_list():
 			file = dir.get_next()
 	
 	enemy_dropdown.item_selected.connect(_on_dropdown_item_selected)
-	
+
 func _on_dropdown_item_selected(index: int) -> void:
 	if index >= 0 and index < enemy_files.size():
 		var path = "res://characters/enemies/" + enemy_files[index]
@@ -108,7 +108,6 @@ func _on_save_button_pressed() -> void:
 			
 	else:
 		push_error("No `current_data` to save")
-
 
 func _on_new_enemy_button_pressed() -> void:
 	print("Creating new enenmy data...")

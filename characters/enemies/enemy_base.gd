@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+class_name EnemyBase
+
 @export var data: EnemyData
 
 @onready var _sprite = $Sprite2D
@@ -11,6 +13,7 @@ var damage: int
 var experience: int
 
 func _ready() -> void:
+	add_to_group("enemies")
 	if data:
 		speed = data.speed
 		health = data.health
@@ -37,3 +40,13 @@ func _physics_process(_delta: float) -> void:
 		move_and_slide()
 		
 		_sprite.flip_h = velocity.x > 0
+
+func take_damage(amount: int):
+	health -= amount
+	print("Enemy took ", amount, " damage. Remaing health: ", health)
+	if health <= 0:
+		print("Enemy died.")
+		die()
+
+func die():
+	queue_free()

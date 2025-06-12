@@ -10,7 +10,11 @@ var health := max_health
 var can_take_damage := true
 
 @onready var _animated_sprite = $AnimatedSprite2D
-@onready var health_bar = $AnimatedSprite2D/HealthBar
+@onready var health_bar = $HealthBar
+
+func _ready() -> void:
+	add_to_group("characters")
+	$SlashAttack.set_process(true)
 
 func get_input():
 	var input_direction = Input.get_vector("Left", "Right", "Up", "Down")
@@ -32,7 +36,9 @@ func _physics_process(_delta):
 		_animated_sprite.flip_h = false
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
-	print("Enemy entered my HurtBox:", area.name)
+	if area.is_in_group("player_attack"):
+		return
+	
 	_apply_damage(10)
 		
 func _apply_damage(amount: int):
@@ -44,8 +50,11 @@ func _apply_damage(amount: int):
 	health_bar.value = health
 	
 	if health <= 0:
-		print("Player died.")
+		queue_free()
 		
 	can_take_damage = false
 	await get_tree().create_timer(0.5).timeout
 	can_take_damage = true
+
+func _on_temporary_quit_button_pressed() -> void:
+	get_tree().quit()

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbjs4r3mckxp3"]
+
+[ext_resource type="Script" uid="uid://n13m7njv2iun" path="res://attacks/slash_attack.gd" id="1_11bvm"]
+[ext_resource type="Texture2D" uid="uid://brcqd7vsv03ij" path="res://art/attacks/slash-effect.png" id="1_ujiei"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_11bvm"]
+size = Vector2(24, 64)
+
+[node name="SlashAttack" type="Area2D"]
+collision_layer = 2
+collision_mask = 128
+script = ExtResource("1_11bvm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ujiei")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_11bvm")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
